@@ -13,6 +13,24 @@ class SignalMessengerToolkit {
   /// {@macro signal_messenger_toolkit}
   const SignalMessengerToolkit();
 
+  /// Creates a sticker pack archive from a list of images and emojis.
+  ///
+  /// This function takes the provided images and emojis, creates a temporary
+  /// workspace, copies the images, generates a `stickers.yaml` file with metadata,
+  /// and compresses the entire pack into a `.tar.gz` file.
+  ///
+  /// Throws an [ArgumentError] if the lengths of [imagePaths] and [emojis]
+  /// do not match.
+  ///
+  /// Returns the created `.tar.gz` archive file.
+  ///
+  /// Parameters:
+  /// - [title]: The title of the sticker pack.
+  /// - [author]: The author of the sticker pack.
+  /// - [imagePaths]: A list of paths to the images to be included in the pack.
+  /// - [emojis]: A list of emojis corresponding to each image.
+  /// - [outputPath]: The output path prefix for the archive (without the `.tar.gz` extension).
+
   Future<File> createStickerPack({
     required String title,
     required String author,
