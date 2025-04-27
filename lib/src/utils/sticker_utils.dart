@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -6,22 +5,20 @@ import 'package:archive/archive_io.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:signal_messenger_toolkit/src/pack_meta.dart';
-import 'package:yaml/yaml.dart';
 
 
 /// Serializes [meta] into a YAML string.
 String generateYaml(PackMeta meta) {
-  final map = {
-    'title': meta.title,
-    'author': meta.author,
-    'stickers': meta.stickers
-        .map((s) => {'emoji': s.emoji, 'file': s.fileName})
-        .toList(),
-  };
-  // yaml package doesn't support dumping, so JSON → YAML hack
-  final jsonString = jsonEncode(map);
-  final yamlMap = loadYaml(jsonString) as YamlMap;
-  return yamlMap.toString();
+  final stickerEntries = meta.stickers
+      .map((s) => '  - emoji: ${s.emoji}\n    file: ${s.fileName}')
+      .join('\n');
+      
+  return '''
+title: ${meta.title}
+author: ${meta.author}
+stickers:
+$stickerEntries
+''';
 }
 
 /// Compresses [inputPath] to WebP format (512×512 cap, ~≤300 KB).
