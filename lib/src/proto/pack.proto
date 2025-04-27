@@ -1,0 +1,14 @@
+syntax = "proto3";
+package signalstickers;
+
+message Sticker {
+  uint32 id   = 1;
+  string emoji = 2;
+}
+
+message Pack {
+  string title   = 1;
+  string author  = 2;
+  Sticker cover  = 3;
+  repeated Sticker stickers = 4;
+}
